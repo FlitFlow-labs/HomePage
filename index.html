@@ -1,22 +1,309 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlitFlow</title>
+    <title>FlitFlow — A Spec for Safe Workflow Execution</title>
+    <meta name="description"
+        content="FlitFlow is a language-independent core specification for executing AST-defined workflows safely. Always Safe execution, a unified function pipeline, and explicit signal propagation — implemented today by the official Python runtime.">
+    <link rel="canonical" href="https://site.flitflow.org/">
+    <meta property="og:title" content="FlitFlow — A Spec for Safe Workflow Execution">
+    <meta property="og:description"
+        content="A language-independent core specification for executing AST-defined workflows safely, implemented today by the official Python runtime.">
+    <meta property="og:url" content="https://site.flitflow.org/">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSTDPW76"></script>
-	<script>
-  		window.dataLayer = window.dataLayer || [];
-  		function gtag(){dataLayer.push(arguments);}
-  		gtag('js', new Date());
-  		gtag('config', 'G-J8GSTDPW76');
-	</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSTDPW76"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-J8GSTDPW76');
+    </script>
 </head>
 
 <body>
-    <h1>FlitFlow TopPage</h1>
+
+    <nav class="nav">
+        <div class="nav__inner">
+            <a href="#top" class="nav__logo"><span class="nav__logo-mark"></span>FlitFlow</a>
+            <div class="nav__links">
+                <a href="#spec">Spec</a>
+                <a href="#guarantees">Guarantees</a>
+                <a href="#quicklook">Quick Look</a>
+                <a href="#compliance">Compliance</a>
+                <a href="https://github.com/FlitFlow-labs" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <span class="nav__version">SPEC v1.1 · PYTHON RUNTIME v1.1.1</span>
+        </div>
+    </nav>
+
+    <header class="hero" id="top">
+        <div class="wrap">
+            <div class="titleblock">
+                DWG&nbsp;NO: FF-CORE&nbsp;&nbsp;|&nbsp;&nbsp;<strong>REV 1.1.1</strong><br>
+                LICENSE: MIT&nbsp;&nbsp;|&nbsp;&nbsp;SCALE: N/A
+            </div>
+            <p class="hero__eyebrow">FLITFLOW CORE SPECIFICATION</p>
+            <h1>Runs the way it's written, <em>never crashes</em>.</h1>
+            <p class="hero__sub">
+                FlitFlow is a language-independent specification for executing AST-defined
+                workflows safely. Undefined function calls and invalid access never crash
+                the runtime — they're logged and execution continues. Today, it's implemented
+                by the official Python runtime.
+            </p>
+            <div class="hero__cta">
+                <a class="btn btn--primary" href="#quicklook">Get Started</a>
+                <a class="btn btn--ghost" href="https://github.com/FlitFlow-labs/FlitFlow-Core-Spec" target="_blank"
+                    rel="noopener">Read the Spec</a>
+                <a class="btn btn--ghost" href="https://github.com/FlitFlow-labs" target="_blank"
+                    rel="noopener">GitHub</a>
+            </div>
+
+            <div class="pipeline">
+                <p class="pipeline__label">Step Execution Pipeline — SPEC 1.2.3</p>
+                <div class="pipeline__track">
+                    <div class="pipeline__line"></div>
+                    <div class="pipeline__node"><span
+                            class="pipeline__dot"></span><span>Resolve<small>function</small></span></div>
+                    <div class="pipeline__node"><span
+                            class="pipeline__dot"></span><span>Evaluate<small>args</small></span></div>
+                    <div class="pipeline__node"><span
+                            class="pipeline__dot"></span><span>Invoke<small>execute()</small></span></div>
+                    <div class="pipeline__node"><span
+                            class="pipeline__dot"></span><span>Bind<small>target_variable</small></span></div>
+                    <div class="pipeline__node"><span
+                            class="pipeline__dot"></span><span>Propagate<small>signal</small></span></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="spec">
+        <div class="wrap">
+            <p class="section__eyebrow">SPEC × RUNTIME</p>
+            <h2 class="section__title">The spec and the runtime are two different things.</h2>
+            <p class="section__desc">
+                FlitFlow is defined as a common specification, independent of any single language.
+                The Python runtime is one official implementation that conforms to it. The same
+                AST script produces the same result on any implementation that follows the spec.
+            </p>
+            <div class="diagram">
+                <div class="diagram__spec">
+                    <div class="diagram__spec-box">FlitFlow Core Spec<span
+                            class="diagram__spec-sub">FlitFlow-labs/FlitFlow-Core-Spec</span></div>
+                </div>
+                <div class="diagram__branches">
+                    <a class="branch branch--official" href="https://github.com/FlitFlow-labs/FlitFlow-Python"
+                        target="_blank" rel="noopener">
+                        Python Runtime<br><small>official implementation · v1.1.1</small>
+                    </a>
+                    <div class="branch branch--future">TypeScript<br><small>not yet implemented · open to anyone</small>
+                    </div>
+                    <div class="branch branch--future">Go / Rust<br><small>not yet implemented · open to anyone</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="guarantees">
+        <div class="wrap">
+            <p class="section__eyebrow">CORE GUARANTEES</p>
+            <h2 class="section__title">Four things the spec guarantees.</h2>
+            <p class="section__desc">Every conforming implementation is required to hold these.</p>
+            <div class="parts">
+                <div class="part">
+                    <span class="part__no">PART 01</span>
+                    <h3>Always Safe execution</h3>
+                    <p>Undefined function calls and invalid type operations never crash the runtime. Abnormal conditions
+                        are logged and execution continues safely.</p>
+                </div>
+                <div class="part">
+                    <span class="part__no">PART 02</span>
+                    <h3>Unified pipeline</h3>
+                    <p><code>args</code> are pre-evaluated, <code>params</code> are passed through as deferred blocks,
+                        and results are automatically bound to <code>target_variable</code>.</p>
+                </div>
+                <div class="part">
+                    <span class="part__no">PART 03</span>
+                    <h3>Explicit signal propagation</h3>
+                    <p><code>RETURN</code>, <code>BREAK</code>, and <code>CONTINUE</code> are structured signals, not
+                        exceptions — consumed at well-defined boundaries.</p>
+                </div>
+                <div class="part">
+                    <span class="part__no">PART 04</span>
+                    <h3>Deterministic fallback</h3>
+                    <p>Out-of-bounds access and unresolved branches resolve exactly as the spec defines — to
+                        <code>NULL</code> or a warning log, with no guesswork.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="quicklook">
+        <div class="wrap">
+            <p class="section__eyebrow">QUICK LOOK</p>
+            <h2 class="section__title">Your first flow, in four lines of AST.</h2>
+            <p class="section__desc">Full usage is covered in the documentation. This is just the shape of it.</p>
+            <div class="codepanel">
+                <div class="codepanel__bar"><span>quickstart.py</span><span>FlitFlow-labs/FlitFlow-Python</span></div>
+                <pre><span class="tok-com"># 1. Define a workflow as an AST</span>
+ast = {
+    <span class="tok-str">"main"</span>: [
+        { <span class="tok-key">"function"</span>: <span class="tok-str">"set_variables"</span>, <span class="tok-key">"args"</span>: { <span class="tok-str">"message"</span>: <span class="tok-str">"Hello, FlitFlow!"</span> } }
+    ]
+}
+
+<span class="tok-com"># 2. Validate against the spec, then run it</span>
+engine = RuntimeEngine(ast)
+register_builtin_functions(engine)
+
+state = {}
+result = engine.run(state)
+
+print(state[<span class="tok-str">"message"</span>])   <span class="tok-com"># Hello, FlitFlow!</span>
+print(result.status)     <span class="tok-com"># <span class="tok-amb">Status.SUCCESS</span></span></pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="compliance">
+        <div class="wrap">
+            <p class="section__eyebrow">SPEC COMPLIANCE</p>
+            <h2 class="section__title">Verified by tests, not by assumption.</h2>
+            <p class="section__desc">FlitFlow treats compatibility as something to prove, not promise.</p>
+            <div class="compliance">
+                <div class="stamp"><strong>SPEC</strong><strong>COMPLIANT</strong><span>v1.1.1 · conformance
+                        tested</span></div>
+                <ul class="compliance__list">
+                    <li><strong>Schema validation:</strong> every AST is validated against the official JSON Schema
+                        before it runs.</li>
+                    <li><strong>Conformance matrix:</strong> each spec requirement is mapped to the test case that
+                        verifies it, published as the Conformance Matrix.</li>
+                    <li><strong>Clear versioning:</strong> patch, minor, and major changes are scoped so breaking
+                        changes are never a surprise.</li>
+                    <li><strong>Migration guides:</strong> behavioral differences between versions are documented to
+                        make upgrades a checklist, not a guess.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+            <p class="section__eyebrow">USE CASES</p>
+            <h2 class="section__title">Where FlitFlow fits.</h2>
+            <div class="cases">
+                <div class="case">
+                    <h3>Workflow automation</h3>
+                    <p>Approval chains, batch jobs, and business logic you'd rather declare as an AST than hand-code.
+                    </p>
+                </div>
+                <div class="case">
+                    <h3>No-code / low-code execution engines</h3>
+                    <p>Flows assembled visually in a builder, run by an engine that won't crash on a bad configuration.
+                    </p>
+                </div>
+                <div class="case">
+                    <h3>External API pipelines</h3>
+                    <p>Wrap API calls or database access as custom functions and wire them safely into a flow.</p>
+                </div>
+                <div class="case">
+                    <h3>Consistent execution across languages</h3>
+                    <p>Any runtime that conforms to the same spec produces the same behavior, now or after a migration.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+            <p class="section__eyebrow">ROADMAP</p>
+            <h2 class="section__title">Where the spec stands.</h2>
+            <div class="timeline">
+                <div class="tl-item">
+                    <span class="tl-tag">v1.0</span>
+                    <h4>Baseline specification</h4>
+                    <p>Always Safe execution, the unified pipeline, and the core control signals were defined.</p>
+                </div>
+                <div class="tl-item">
+                    <span class="tl-tag">v1.1</span>
+                    <h4>Clarified execution semantics</h4>
+                    <p>Boolean normalization in <code>switch</code>, shallow-copied nested state, and out-of-loop signal
+                        handling were made explicit.</p>
+                </div>
+                <div class="tl-item">
+                    <span class="tl-tag">v1.1.1</span>
+                    <h4>Added set_global_variables</h4>
+                    <p>A built-in for updating root-level state across nested scopes. Supported by the current Python
+                        runtime.</p>
+                </div>
+                <div class="tl-item is-future">
+                    <span class="tl-tag">Next</span>
+                    <h4>Other language runtimes</h4>
+                    <p>Because the spec is language-independent, conforming implementations in TypeScript, Go, or
+                        elsewhere are open for anyone to build.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="final">
+        <div class="wrap">
+            <h2>Start with the spec.</h2>
+            <p>SPEC.md and core_schema.json in FlitFlow-Core-Spec are the source of truth for every behavior described
+                here.</p>
+            <div class="hero__cta">
+                <a class="btn btn--primary" href="https://github.com/FlitFlow-labs/FlitFlow-Python" target="_blank"
+                    rel="noopener">Read the Docs</a>
+                <a class="btn btn--ghost" href="https://github.com/FlitFlow-labs/FlitFlow-Core-Spec" target="_blank"
+                    rel="noopener">View the Spec</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="wrap">
+            <div class="footer__grid">
+                <div>
+                    FlitFlow Core Specification<br>
+                    © 2026 FlitFlow-labs — MIT License
+                </div>
+                <div class="footer__links">
+                    <a href="#spec">Spec</a>
+                    <a href="#quicklook">Quick Look</a>
+                    <a href="#compliance">Compliance</a>
+                    <a href="https://github.com/FlitFlow-labs/FlitFlow-Core-Spec" target="_blank" rel="noopener">Core
+                        Spec</a>
+                    <a href="https://github.com/FlitFlow-labs/FlitFlow-Python" target="_blank" rel="noopener">Python
+                        Runtime</a>
+                </div>
+                <div>SPEC v1.1 &nbsp;/&nbsp; PYTHON RUNTIME v1.1.1</div>
+                <div>
+                    This site is created with the assistance of LLMs. Content is reviewed and verified by humans, while
+                    initial drafts are
+                    generated by AI.<br>
+                    This site is maintained by FlitFlow-labs Organization members.
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
 
 </html>
